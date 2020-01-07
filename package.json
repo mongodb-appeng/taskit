@@ -1,7 +1,36 @@
 {
   "name": "todo",
+  "description": "MongoDB GraphQL Demo",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://github.com/shawnbmccarthy/todo#readme",
+  "bugs": {
+    "url": "https://github.com/shawnbmccarthy/todo/issues",
+    "email": "shawn.mccarthy@mongodb.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shawnbmccarthy/todo"
+  },
+  "contributors": [
+    {
+      "name": "Andrew Morgan",
+      "email": "andrew.morgan@mongodb.com"
+    },
+    {
+      "name": "Avery Rosen",
+      "email": "avery.rosen@mongodb.com"
+    },
+    {
+      "name": "Diana Esteves",
+      "email": "diana.esteves@mongodb.com"
+    },
+    {
+      "name": "Shawn McCarthy",
+      "email": "shawn.mccarthy@mongodb.com"
+    }
+  ],
+  "license": "Apache-2.0",
   "dependencies": {
     "@material-ui/core": "^4.8.2",
     "@material-ui/icons": "^4.5.1",
