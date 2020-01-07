@@ -1,18 +1,15 @@
-import {Stitch, AnonymousCredential} from 'mongodb-stitch-browser-sdk';
+import {createTask, findAllTasks, findOneTaskById, deleteOneTask, updateTask} from './graphql';
+import {stitchClient, hasLoggedInUser, getCurrentUser, loginAnonymous, logoutCurrentUser} from './client';
 
-/*
- * TODO: clean up for production distribution
- */
-const APP_ID = process.env.REACT_APP_STITCH_APP_ID;
-
-/*
- * TODO: make a ternary?
- */
-const getStitchClient = (appId = APP_ID) => {
-    if(Stitch.hasAppClient(appId)){
-        return Stitch.getAppClient(appId);
-    }
-    return Stitch.initializeAppClient(appId);
-};
-
-export default getStitchClient;
+export {
+    createTask,
+    findAllTasks,
+    findOneTaskById,
+    deleteOneTask,
+    updateTask,
+    stitchClient,
+    hasLoggedInUser,
+    getCurrentUser,
+    loginAnonymous,
+    logoutCurrentUser
+}

@@ -1,37 +1,29 @@
 import {
-    GET_TASKS,
-    ADD_TASK,
-    FINISH_TASK,
-    ARCHIVE_TASK,
-    DELETE_TASK,
-    EDIT_TASK
+    ANON_LOGIN,
+    LOGOUT
 } from '../types';
+import {getCurrentUser, hasLoggedInUser} from "../../stitch";
 
+/*
+ * NOTE: this reducer is not production ready
+ *
+ * anonymous user authentication should only be used for reading from Atlas.
+ * when a user logs in using one of the other Stitch providers this anonymous
+ * user can be linked to that account which will have higher privileges.
+ *
+ * For this tutorial we are focusing on the graphql features and will introduce
+ * richer authentication in later tutorials.
+ */
 export default (state, action) => {
     switch (action.type) {
-        case GET_TASKS:
+        case ANON_LOGIN:
+        case LOGOUT:
             return {
-                ...state
-            };
-        case ADD_TASK:
-            return {
-                ...state
-            };
-        case FINISH_TASK:
-            return {
-                ...state
-            };
-        case ARCHIVE_TASK:
-            return {
-                ...state
-            };
-        case DELETE_TASK:
-            return {
-                ...state
-            };
-        case EDIT_TASK:
-            return {
-                ...state
+                ...state,
+                user: getCurrentUser(),
+                loggedIn: hasLoggedInUser(),
+                loading: !hasLoggedInUser(),
+                error: null
             };
         default:
             return state;

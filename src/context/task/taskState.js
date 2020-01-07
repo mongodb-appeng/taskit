@@ -1,69 +1,20 @@
 import React, {useReducer} from 'react';
 import TaskContext from './taskContext';
 import TaskReducer from './taskReducer';
+import {createTask, findAllTasks, findOneTaskById, updateTask, deleteOneTask} from '../../stitch';
 import {
     GET_TASKS,
     ADD_TASK,
     FINISH_TASK,
     ARCHIVE_TASK,
     DELETE_TASK,
-    EDIT_TASK
+    EDIT_TASK,
+    TASK_ERROR
 } from '../types';
-
-const dummyTasks = [
-    {
-        _id: 1,
-        name: 'clean bedroom',
-        description: 'some description here',
-        createdAt: new Date(),
-        tags: [],
-        dueBy: null,
-        modifiedAt: null,
-        archived: false,
-        archivedAt: null,
-        finished: false,
-        finishedAt: null,
-        recurringTask: false,
-        recurringDate: null,
-        history: []
-    },
-    {
-        _id: 2,
-        name: 'clean kitchen',
-        description: 'some description here',
-        createdAt: new Date(),
-        tags: [],
-        dueBy: null,
-        modifiedAt: null,
-        archived: false,
-        archivedAt: null,
-        finished: false,
-        finishedAt: null,
-        recurringTask: false,
-        recurringDate: null,
-        history: []
-    },
-    {
-        _id: 3,
-        name: 'clean bathroom',
-        description: 'some description here',
-        createdAt: new Date(),
-        tags: [],
-        dueBy: null,
-        modifiedAt: null,
-        archived: false,
-        archivedAt: null,
-        finished: false,
-        finishedAt: null,
-        recurringTask: false,
-        recurringDate: null,
-        history: []
-    }
-];
 
 const TaskState = props => {
     const initialState = {
-        tasks: dummyTasks,
+        tasks: [],
         loading: true,
         current: null,
         byTag: null,
@@ -78,9 +29,30 @@ const TaskState = props => {
      * getTasks
      * TODO: update to use stitch
      */
-    const getTasks = () => {
-        dispatch({type: GET_TASKS});
+    const getTasks = async () => {
+        const resp = await findAllTasks();
+        dispatch({type: GET_TASKS, payload: resp.data.taskss});
     };
+
+    const deleteTask = async id => {
+        try {
+            await deleteOneTask(id);
+            dispatch({type: DELETE_TASK, payload: id});
+        }catch(e){
+            console.error('deleteTaskError');
+            console.error(e);
+        }
+    };
+
+    const archiveTask = id => dispatch({type: ARCHIVE_TASK, payload: id});
+    const editTask = task => dispatch({type: EDIT_TASK, payload: task});
+
+    const addTask = async task => {
+        const resp = await createTask(task);
+        dispatch({type: ADD_TASK, payload: resp.data.insertOneTasks});
+    };
+
+    const finishTask = id => dispatch({type: FINISH_TASK, payload: id});
 
     return (
         <TaskContext.Provider value={{
@@ -91,7 +63,12 @@ const TaskState = props => {
             sortBy: state.sortBy,
             page: state.page,
             error: state.error,
-            getTasks
+            getTasks,
+            deleteTask,
+            archiveTask,
+            editTask,
+            addTask,
+            finishTask
         }}>
             {props.children}
         </TaskContext.Provider>

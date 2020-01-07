@@ -11,11 +11,13 @@ export default (state, action) => {
     switch (action.type) {
         case GET_TASKS:
             return {
-                ...state
+                ...state,
+                tasks: action.payload
             };
         case ADD_TASK:
             return {
-                ...state
+                ...state,
+                tasks: [action.payload, ...state.tasks]
             };
         case FINISH_TASK:
             return {
@@ -27,7 +29,8 @@ export default (state, action) => {
             };
         case DELETE_TASK:
             return {
-                ...state
+                ...state,
+                tasks: state.tasks.filter(task => task._id !== action.payload)
             };
         case EDIT_TASK:
             return {

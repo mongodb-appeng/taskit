@@ -1,97 +1,50 @@
 import React, {useReducer} from 'react';
 import StitchContext from './stitchContext';
 import TaskReducer from './stitchReducer';
+import {loginAnonymous, getCurrentUser, hasLoggedInUser, logoutCurrentUser} from '../../stitch';
 import {
-    GET_TASKS,
-    ADD_TASK,
-    FINISH_TASK,
-    ARCHIVE_TASK,
-    DELETE_TASK,
-    EDIT_TASK
+    ANON_LOGIN,
+    LOGOUT,
+    STITCH_ERROR
 } from '../types';
 
-const dummyTasks = [
-    {
-        _id: 1,
-        name: 'clean bedroom',
-        description: 'some description here',
-        createdAt: new Date(),
-        tags: [],
-        dueBy: null,
-        modifiedAt: null,
-        archived: false,
-        archivedAt: null,
-        finished: false,
-        finishedAt: null,
-        recurringTask: false,
-        recurringDate: null,
-        history: []
-    },
-    {
-        _id: 2,
-        name: 'clean kitchen',
-        description: 'some description here',
-        createdAt: new Date(),
-        tags: [],
-        dueBy: null,
-        modifiedAt: null,
-        archived: false,
-        archivedAt: null,
-        finished: false,
-        finishedAt: null,
-        recurringTask: false,
-        recurringDate: null,
-        history: []
-    },
-    {
-        _id: 3,
-        name: 'clean bathroom',
-        description: 'some description here',
-        createdAt: new Date(),
-        tags: [],
-        dueBy: null,
-        modifiedAt: null,
-        archived: false,
-        archivedAt: null,
-        finished: false,
-        finishedAt: null,
-        recurringTask: false,
-        recurringDate: null,
-        history: []
-    }
-];
-
+/*
+ * TODO:
+ *  - try catch & error handling
+ *
+ * NOTE: This state context is not production ready
+ */
 const StitchState = props => {
+    /*
+     * check for existing anonymous login
+     */
     const initialState = {
-        tasks: dummyTasks,
-        loading: true,
-        current: null,
-        byTag: null,
-        sortBy: null,
-        page: 0,
+        user: getCurrentUser(),
+        loggedIn: hasLoggedInUser(),
+        loading: !hasLoggedInUser(),
         error: null
     };
 
     const [state, dispatch] = useReducer(TaskReducer, initialState);
 
-    /*
-     * getTasks
-     * TODO: update to use stitch
-     */
-    const getTasks = () => {
-        dispatch({type: GET_TASKS});
+    const anonLogin = async () => {
+        await loginAnonymous();
+        dispatch({type: ANON_LOGIN});
+    };
+
+    const logout = async () => {
+        await logoutCurrentUser();
+        dispatch({type: LOGOUT});
     };
 
     return (
         <StitchContext.Provider value={{
-            tasks: state.tasks,
+            user: state.user,
+            loggedIn: state.loggedIn,
             loading: state.loading,
-            current: state.current,
-            byTag: state.byTag,
-            sortBy: state.sortBy,
-            page: state.page,
             error: state.error,
-            getTasks
+            anonLogin,
+            logout
         }}>
             {props.children}
         </StitchContext.Provider>

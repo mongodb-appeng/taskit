@@ -1,0 +1,14 @@
+/* cards */
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+}
+
+.task-icon {
+    display: flex;
+    float: right;
+}
+
+.task-icon-btn:hover {
+    cursor: pointer;
+}
