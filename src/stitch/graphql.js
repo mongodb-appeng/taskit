@@ -29,6 +29,11 @@ export const createTask = async task => {
             }
         }
     });
+
+    const respData = resp.data;
+    if('errors' in respData){
+        throw new Error(respData.errors[0].message);
+    }
     return resp.data;
 };
 
@@ -93,58 +98,3 @@ export const deleteOneTask = async id => {
     });
     return resp.data;
 };
-
-/*
-try {
-            await loginAnonymous();
-            const user  = getCurrentUser();
-
-            console.log(user);
-            const resp = await axios({
-                url: 'https://stitch-dev.mongodb.com/api/client/v2.0/app/graphql-qpnae/graphql',
-                method: 'post',
-                headers: {
-                    'Authorization': `Bearer ${user.auth.activeUserAuthInfo.accessToken}`
-                },
-                data: {
-                    query: `
-                        {
-                            taskss{
-                                _id,
-                                name,
-                                description
-                            }
-                        }
-                    `
-                }
-            });
-            console.log(resp.data);
-
-            const resp1 = await axios({
-                url: 'https://stitch-dev.mongodb.com/api/client/v2.0/app/graphql-qpnae/graphql',
-                method: 'post',
-                headers: {
-                    'Authorization': `Bearer ${user.auth.activeUserAuthInfo.accessToken}`
-                },
-                data: {
-                    query: `
-                        mutation insertOneTasks($data:TasksInsertInput!){
-                            insertOneTasks(data:$data){
-                                _id
-                            }
-                        }
-                    `,
-                    variables: {
-                        data: {
-                            name: "demo",
-                            description: "demo desc",
-                            owner_id: user.id
-                        }
-                    }
-                }
-            });
-            console.log(resp1.data);
-        } catch(e){
-            console.log(e);
-        }
- */

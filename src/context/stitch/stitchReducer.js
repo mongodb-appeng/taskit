@@ -1,6 +1,8 @@
 import {
     ANON_LOGIN,
-    LOGOUT
+    LOGOUT,
+    STITCH_ERROR,
+    CLEAR_STITCH_ERROR
 } from '../types';
 import {getCurrentUser, hasLoggedInUser} from "../../stitch";
 
@@ -23,6 +25,16 @@ export default (state, action) => {
                 user: getCurrentUser(),
                 loggedIn: hasLoggedInUser(),
                 loading: !hasLoggedInUser(),
+                error: null
+            };
+        case STITCH_ERROR:
+            return {
+                ...state,
+                error: action.payload
+            };
+        case CLEAR_STITCH_ERROR:
+            return {
+                ...state,
                 error: null
             };
         default:

@@ -1,3 +1,4 @@
+/* global styles */
 * {
   box-sizing: border-box;
   margin-top: 0;
@@ -10,16 +11,6 @@ body {
   line-height: 1.6;
   background-color: #fff;
   color: #333;
-}
-
-a {
-  color: var(--primary-color);
-  text-decoration: none;
-}
-
-a:hover {
-  color: #666;
-  text-decoration: none;
 }
 
 ul {
@@ -43,3 +34,4 @@ ul {
 .list li {
   padding-bottom: 0.3rem;
 }
+

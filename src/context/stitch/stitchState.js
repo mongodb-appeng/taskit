@@ -5,7 +5,8 @@ import {loginAnonymous, getCurrentUser, hasLoggedInUser, logoutCurrentUser} from
 import {
     ANON_LOGIN,
     LOGOUT,
-    STITCH_ERROR
+    STITCH_ERROR,
+    CLEAR_STITCH_ERROR
 } from '../types';
 
 /*
@@ -28,14 +29,24 @@ const StitchState = props => {
     const [state, dispatch] = useReducer(TaskReducer, initialState);
 
     const anonLogin = async () => {
-        await loginAnonymous();
-        dispatch({type: ANON_LOGIN});
+        try {
+            await loginAnonymous();
+            dispatch({type: ANON_LOGIN});
+        } catch(error) {
+            dispatch({type: STITCH_ERROR, error: error.message});
+        }
     };
 
     const logout = async () => {
-        await logoutCurrentUser();
-        dispatch({type: LOGOUT});
+        try {
+            await logoutCurrentUser();
+            dispatch({type: LOGOUT});
+        } catch(error) {
+            dispatch({type: STITCH_ERROR, error: error.message});
+        }
     };
+
+    const clearError = () => dispatch({type: CLEAR_STITCH_ERROR});
 
     return (
         <StitchContext.Provider value={{
@@ -44,7 +55,8 @@ const StitchState = props => {
             loading: state.loading,
             error: state.error,
             anonLogin,
-            logout
+            logout,
+            clearError
         }}>
             {props.children}
         </StitchContext.Provider>

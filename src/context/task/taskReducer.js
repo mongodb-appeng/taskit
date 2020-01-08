@@ -4,7 +4,9 @@ import {
     FINISH_TASK,
     ARCHIVE_TASK,
     DELETE_TASK,
-    EDIT_TASK
+    EDIT_TASK,
+    TASK_ERROR,
+    CLEAR_TASK_ERROR,
 } from '../types';
 
 export default (state, action) => {
@@ -35,6 +37,16 @@ export default (state, action) => {
         case EDIT_TASK:
             return {
                 ...state
+            };
+        case TASK_ERROR:
+            return {
+                ...state,
+                error: action.payload
+            };
+        case CLEAR_TASK_ERROR:
+            return {
+                ...state,
+                error: null
             };
         default:
             return state;

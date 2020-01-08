@@ -1,6 +1,7 @@
 import React, {Fragment, useContext, useEffect} from 'react';
 import {TaskList, CreateTaskModal} from '../tasks';
 import StitchContext from '../../context/stitch/stitchContext';
+import AlertContext from '../../context/alert/alertContext';
 
 /*
  * TODO: get version from some variable
@@ -13,6 +14,7 @@ export const About = () =>  <div>
     <p>graphql demo</p>
     <p>add other information here as needed</p>
     <p>version 1.0.0</p>
+    <p><span className='iconify' data-icon='mdi:github-face' data-inline='false'/></p>
 </div>;
 
 /*
@@ -22,7 +24,12 @@ export const Home = () => {
     return (
         <Fragment>
             <div style={{paddingBottom: '10px', paddingTop: '10px'}}>
-                <button type='button' className='btn btn-lg btn-secondary' data-toggle='modal' data-target='#createTaskModal'>
+                <button
+                    type='button'
+                    className='btn btn-lg btn-secondary'
+                    data-toggle='modal'
+                    data-target='#createTaskModal'
+                >
                     <i className='material-icons' style={{verticalAlign: 'middle', paddingBottom: '5px'}}>
                         add_circle_outline
                     </i>
@@ -40,13 +47,21 @@ export const Home = () => {
  */
 export const Login = props => {
     const stitchContext = useContext(StitchContext);
-    const {anonLogin, loggedIn} = stitchContext;
+    const alertContext = useContext(AlertContext);
+
+    const {anonLogin, loggedIn, error} = stitchContext;
+    const {setAlert} = alertContext;
 
     useEffect(() => {
         if(loggedIn) {
             props.history.push('/');
         }
-    }, [loggedIn, props.history]);
+
+        if(error !== null){
+            setAlert(error, 'danger');
+        }
+        // eslint-disable-next-line
+    }, [loggedIn, props.history, error]);
 
     return (
         <div className='row h-50 align-items-center' style={{paddingTop: '50px'}}>

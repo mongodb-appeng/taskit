@@ -9,7 +9,8 @@ import {
     ARCHIVE_TASK,
     DELETE_TASK,
     EDIT_TASK,
-    TASK_ERROR
+    TASK_ERROR,
+    CLEAR_TASK_ERROR,
 } from '../types';
 
 const TaskState = props => {
@@ -25,22 +26,23 @@ const TaskState = props => {
 
     const [state, dispatch] = useReducer(TaskReducer, initialState);
 
-    /*
-     * getTasks
-     * TODO: update to use stitch
-     */
     const getTasks = async () => {
-        const resp = await findAllTasks();
-        dispatch({type: GET_TASKS, payload: resp.data.taskss});
+        try {
+            const resp = await findAllTasks();
+            dispatch({type: GET_TASKS, payload: resp.data.taskss});
+        } catch(error) {
+            dispatch({type: TASK_ERROR, payload: error.message});
+        }
     };
 
     const deleteTask = async id => {
         try {
             await deleteOneTask(id);
             dispatch({type: DELETE_TASK, payload: id});
-        }catch(e){
+        }catch(error){
             console.error('deleteTaskError');
-            console.error(e);
+            console.error(error);
+            dispatch({type: TASK_ERROR, payload: error.message});
         }
     };
 
@@ -48,11 +50,21 @@ const TaskState = props => {
     const editTask = task => dispatch({type: EDIT_TASK, payload: task});
 
     const addTask = async task => {
-        const resp = await createTask(task);
-        dispatch({type: ADD_TASK, payload: resp.data.insertOneTasks});
+        try {
+            console.log('addTask');
+            const resp = await createTask(task);
+            dispatch({type: ADD_TASK, payload: resp.data.insertOneTasks});
+            console.log('addTask returned');
+        } catch(error) {
+            console.error('addTaskError');
+            console.error(error);
+            dispatch({type: TASK_ERROR, payload: error.message});
+        }
     };
 
     const finishTask = id => dispatch({type: FINISH_TASK, payload: id});
+
+    const clearTaskError = () => dispatch({type: CLEAR_TASK_ERROR});
 
     return (
         <TaskContext.Provider value={{
@@ -68,7 +80,8 @@ const TaskState = props => {
             archiveTask,
             editTask,
             addTask,
-            finishTask
+            finishTask,
+            clearTaskError
         }}>
             {props.children}
         </TaskContext.Provider>

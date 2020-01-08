@@ -7,27 +7,37 @@ import './index.css';
  *
  */
 export const TaskList = () => {
+    const alertContext = useContext(AlertContext);
     const taskContext = useContext(TaskContext);
-    const {tasks, getTasks} = taskContext;
+
+    const {setAlert} = alertContext;
+    const {tasks, getTasks, error, clearTaskError} = taskContext;
 
     useEffect(() => {
         getTasks();
-        //eslint-disable-next-line
-    }, []);
+
+        if(error){
+            setAlert('graphql error', 'danger');
+            clearTaskError();
+        }
+    }, [error]);
 
     if(tasks === undefined){
-        return <h4>loading....</h4>
+        return <h5>loading...</h5>
     }
+
+    if(tasks.length === 0){
+        return <h5>Please add a task...</h5>
+    }
+
     return (
         <Fragment>
-            {tasks && tasks.map(task => <TaskItem key={task._id} task={task}/>)}
+            {tasks !== null && tasks.map(task => <TaskItem key={task._id} task={task}/>)}
+            <div>hello world</div>
         </Fragment>
     );
 };
 
-/*
- * TODO: create icon menu items?
- */
 const TaskItem = ({task}) => {
     const taskContext = useContext(TaskContext);
     const {deleteTask} = taskContext;
@@ -36,7 +46,8 @@ const TaskItem = ({task}) => {
         console.log('deleteTask called');
         deleteTask(task._id);
 
-    }
+    };
+
     return (
         <Fragment>
             <div className="card border-light mb-2">
@@ -163,4 +174,4 @@ export const CreateTaskModal = () => {
             </div>
         </div>
     )
-}
+};
