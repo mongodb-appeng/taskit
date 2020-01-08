@@ -8,7 +8,7 @@ export const Alerts = () => {
         alertContext.alerts.length > 0 && alertContext.alerts.map(
             alert => (
                 <div className={`alert alert-${alert.type}`} role='alert'>
-                    <i class='material-icons'>info</i> {alert.msg}
+                    <i className='material-icons'>info</i> {alert.msg}
                 </div>
             )
         )

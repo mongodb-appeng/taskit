@@ -20,6 +20,7 @@ export const TaskList = () => {
             setAlert('graphql error', 'danger');
             clearTaskError();
         }
+        //eslint-disable-next-line
     }, [error]);
 
     if(tasks === undefined){
@@ -42,34 +43,29 @@ const TaskItem = ({task}) => {
     const taskContext = useContext(TaskContext);
     const {deleteTask} = taskContext;
 
-    const testF = () => {
-        console.log('deleteTask called');
-        deleteTask(task._id);
-
-    };
-
     return (
         <Fragment>
-            <div className="card border-light mb-2">
-                <div className="card-horizontal">
-                    <div className="img-square-wrapper">
-                        <img src="http://via.placeholder.com/110X110" alt=""/>
+            <div className='card border-light mb-2'>
+                <div className='card-horizontal'>
+                    <div className='img-square-wrapper'>
+                        <img src='http://via.placeholder.com/110X110' alt=''/>
                     </div>
-                    <div className="card-body">
-                        <h5 className="card-title">{task.name}</h5>
+                    <div className='card-body'>
+                        <h5 className='card-title'>{task.name}</h5>
                         <div>
-                            <p className="card-text">{task.description}
+                            <p className='card-text'>{task.description}
                                 <span className='task-icon'>
                                     <i
-                                        className="material-icons grey-text task-icon-btn"
+                                        className='material-icons grey-text task-icon-btn'
                                         style={{marginRight: '10px', marginLeft: '10px'}}
+                                        onClick={()=>deleteTask(task._id)}
                                     >
                                         delete
                                     </i>
                                 </span>
                                 <span className='task-icon'>
                                     <i
-                                        className="material-icons grey-text task-icon-btn"
+                                        className='material-icons grey-text task-icon-btn'
                                         style={{marginRight: '10px', marginLeft: '10px'}}
                                     >
                                         archive
@@ -77,17 +73,16 @@ const TaskItem = ({task}) => {
                                 </span>
                                 <span className='task-icon'>
                                     <i
-                                        className="material-icons grey-text task-icon-btn"
+                                        className='material-icons grey-text task-icon-btn'
                                         style={{marginRight: '10px', marginLeft: '10px'}}
                                     >
                                         edit
                                     </i>
                                 </span>
-                                <span className="task-icon">
+                                <span className='task-icon'>
                                     <i
-                                        className="material-icons grey-text task-icon-btn"
+                                        className='material-icons grey-text task-icon-btn'
                                         style={{marginRight: '10px', marginLeft: '10px'}}
-                                        onClick={testF}
                                     >
                                         done
                                     </i>
