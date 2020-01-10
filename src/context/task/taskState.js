@@ -40,7 +40,6 @@ const TaskState = props => {
             await deleteOneTask(id);
             dispatch({type: DELETE_TASK, payload: id});
         }catch(error){
-            console.error('deleteTaskError');
             console.error(error);
             dispatch({type: TASK_ERROR, payload: error.message});
         }
@@ -51,12 +50,9 @@ const TaskState = props => {
 
     const addTask = async task => {
         try {
-            console.log('addTask');
             const resp = await createTask(task);
             dispatch({type: ADD_TASK, payload: resp.data.insertOneTasks});
-            console.log('addTask returned');
         } catch(error) {
-            console.error('addTaskError');
             console.error(error);
             dispatch({type: TASK_ERROR, payload: error.message});
         }

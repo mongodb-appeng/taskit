@@ -22,7 +22,6 @@ const StitchState = props => {
     const initialState = {
         user: getCurrentUser(),
         loggedIn: hasLoggedInUser(),
-        loading: !hasLoggedInUser(),
         error: null
     };
 
@@ -52,7 +51,6 @@ const StitchState = props => {
         <StitchContext.Provider value={{
             user: state.user,
             loggedIn: state.loggedIn,
-            loading: state.loading,
             error: state.error,
             anonLogin,
             logout,

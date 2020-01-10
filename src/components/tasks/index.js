@@ -11,7 +11,7 @@ export const TaskList = () => {
     const taskContext = useContext(TaskContext);
 
     const {setAlert} = alertContext;
-    const {tasks, getTasks, error, clearTaskError} = taskContext;
+    const {loading, tasks, getTasks, error, clearTaskError} = taskContext;
 
     useEffect(() => {
         getTasks();
@@ -20,11 +20,15 @@ export const TaskList = () => {
             setAlert('graphql error', 'danger');
             clearTaskError();
         }
-        //eslint-disable-next-line
+        // eslint-disable-next-line
     }, [error]);
 
-    if(tasks === undefined){
-        return <h5>loading...</h5>
+    if(tasks.length == 0 && loading){
+        return (
+            <div className="spinner-border" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
+        )
     }
 
     if(tasks.length === 0){
@@ -34,7 +38,6 @@ export const TaskList = () => {
     return (
         <Fragment>
             {tasks !== null && tasks.map(task => <TaskItem key={task._id} task={task}/>)}
-            <div>hello world</div>
         </Fragment>
     );
 };
@@ -145,7 +148,7 @@ export const CreateTaskModal = () => {
                                 className='w-100 required form-control'
                                 type='text'
                                 placeholder='task name'
-                                value={name} required
+                                value={name}
                                 onChange={e => setName(e.target.value)}
                             />
                         </div>
@@ -156,7 +159,6 @@ export const CreateTaskModal = () => {
                                 placeholder='task description'
                                 value={description}
                                 onChange={e => setDescription(e.target.value)}
-                                required
                             />
                         </div>
 

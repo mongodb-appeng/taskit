@@ -24,7 +24,6 @@ export default (state, action) => {
                 ...state,
                 user: getCurrentUser(),
                 loggedIn: hasLoggedInUser(),
-                loading: !hasLoggedInUser(),
                 error: null
             };
         case STITCH_ERROR:

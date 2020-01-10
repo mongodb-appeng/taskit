@@ -14,12 +14,14 @@ export default (state, action) => {
         case GET_TASKS:
             return {
                 ...state,
-                tasks: action.payload
+                tasks: action.payload,
+                loading: false
             };
         case ADD_TASK:
             return {
                 ...state,
-                tasks: [action.payload, ...state.tasks]
+                tasks: [action.payload, ...state.tasks],
+                loading: false,
             };
         case FINISH_TASK:
             return {
@@ -32,7 +34,8 @@ export default (state, action) => {
         case DELETE_TASK:
             return {
                 ...state,
-                tasks: state.tasks.filter(task => task._id !== action.payload)
+                tasks: state.tasks.filter(task => task._id !== action.payload),
+                laoding: false
             };
         case EDIT_TASK:
             return {
