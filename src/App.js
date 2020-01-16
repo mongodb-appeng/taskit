@@ -8,9 +8,6 @@ import TaskState from './context/task/taskState';
 import StitchState from './context/stitch/stitchState';
 import './App.css';
 
-/*
- * TaskIt uses context and hooks to create shared state
- */
 const App = () => {
     return (
         <StitchState>

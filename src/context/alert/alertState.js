@@ -4,6 +4,13 @@ import AlertContext from './alertContext';
 import AlertReducer from './alertReducer';
 import {SET_ALERT, REMOVE_ALERT} from '../types';
 
+/*
+ * simple alert state, since there can be many alerts that occur
+ * we will create an array of alerts
+ *
+ * Each alert will only show for 5 seconds by default and clear
+ * itself
+ */
 const AlertState = props => {
     const initialState = [];
 

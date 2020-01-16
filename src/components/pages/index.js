@@ -1,25 +1,24 @@
 import React, {Fragment, useContext, useEffect} from 'react';
-import {TaskList, CreateTaskModal} from '../tasks';
+import {TaskList, TaskModal} from '../tasks';
 import StitchContext from '../../context/stitch/stitchContext';
 import AlertContext from '../../context/alert/alertContext';
 
-/*
- * TODO: get version from some variable
- *  - license?
- *  - github link?
- *  - doc links?
- */
-export const About = () =>  <div>
-    <h1>About</h1>
-    <p>graphql demo</p>
-    <p>add other information here as needed</p>
-    <p>version 1.0.0</p>
-    <p><span className='iconify' data-icon='mdi:github-face' data-inline='false'/></p>
+export const About = () =>  <div className='row h-50 align-items-center' style={{paddingTop: '50px'}}>
+    <div className='col-12 h-100 d-table'>
+        <div className='card card-block'>
+            <div className='card-header text-center font-weight-bold navbar-light bg-light'>
+                About TaskIt
+            </div>
+            <div className='card-body d-table-cell align-middle'>
+                <p className='card-text'>MongoDB Stitch GraphQL demo</p>
+                <p className='card-text'>version: <strong>0.1.0</strong></p>
+                <p className='card-text'>license: <strong>Apache Version 2.0</strong></p>
+                <p className='card-text'>Github: <strong><a href='https://github.com/mongodb-appeng/taskit'>taskit</a></strong></p>
+            </div>
+        </div>
+    </div>
 </div>;
 
-/*
- * a search might be nice ...
- */
 export const Home = () => {
     return (
         <Fragment>
@@ -28,7 +27,7 @@ export const Home = () => {
                     type='button'
                     className='btn btn-lg btn-secondary'
                     data-toggle='modal'
-                    data-target='#createTaskModal'
+                    data-target='#taskModal'
                 >
                     <i className='material-icons' style={{verticalAlign: 'middle', paddingBottom: '5px'}}>
                         add_circle_outline
@@ -37,14 +36,11 @@ export const Home = () => {
                 </button>
             </div>
             <TaskList/>
-            <CreateTaskModal/>
+            <TaskModal/>
         </Fragment>
     )
 };
 
-/*
- * TODO: simple anonymous testing for login
- */
 export const Login = props => {
     const stitchContext = useContext(StitchContext);
     const alertContext = useContext(AlertContext);
@@ -68,19 +64,20 @@ export const Login = props => {
             <div className='col-12 h-100 d-table'>
                 <div className='card card-block'>
                     <div className='card-header text-center font-weight-bold navbar-light bg-light'>
-                        TaskIt: A Simple Task Tutorial
+                        TaskIt: A Simple ToDo Tutorial
                     </div>
                     <div className='card-body d-table-cell align-middle'>
                         <p className='card-text'>
                             This tutorial makes use of the MongoDB Atlas Data Platform, including Stitch and the new
                             GraphQL features to manipulate basic tasks.
                         </p>
-                        <p className='card-text'>for more information see:</p>
-                        <ul>
-                            <li>....</li>
-                            <li>....</li>
-                            <li>....</li>
-                        </ul>
+                        <p>
+                            This application uses simple anonymous login to gain access to the data plaform.
+                        </p>
+                        <p>
+                            For more information on how to setup this application please visit
+                            this <a href='https://github.com/mongodb-appeng/taskit'>github</a> repository
+                        </p>
                     </div>
                     <div className='card-body text-center'>
                         <button

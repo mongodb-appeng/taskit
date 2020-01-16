@@ -1,6 +1,9 @@
 import React, {useContext} from 'react';
 import AlertContext from '../../context/alert/alertContext';
 
+/*
+ * simple alert component to show basic errors
+ */
 export const Alerts = () => {
     const alertContext = useContext(AlertContext);
 
@@ -13,4 +16,4 @@ export const Alerts = () => {
             )
         )
     );
-}
+};

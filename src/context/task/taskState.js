@@ -1,66 +1,92 @@
 import React, {useReducer} from 'react';
 import TaskContext from './taskContext';
 import TaskReducer from './taskReducer';
-import {createTask, findAllTasks, findOneTaskById, updateTask, deleteOneTask} from '../../stitch';
+import {createTask, findAllTasks, updateTask, deleteOneTask} from '../../stitch';
 import {
     GET_TASKS,
     ADD_TASK,
-    FINISH_TASK,
-    ARCHIVE_TASK,
     DELETE_TASK,
     EDIT_TASK,
+    SET_CURRENT_TASK,
+    CLEAR_CURRENT_TASK,
     TASK_ERROR,
     CLEAR_TASK_ERROR,
 } from '../types';
 
+/*
+ * the task state
+ */
 const TaskState = props => {
     const initialState = {
-        tasks: [],
-        loading: true,
-        current: null,
-        byTag: null,
-        sortBy: null,
-        page: 0,
-        error: null
+        tasks: [],              // list of user tasks (populated by graphql queries)
+        loading: true,          // used to enable/disable spinner
+        current: null,          // current task the application is using
+        error: null             // error messages reported here
     };
 
     const [state, dispatch] = useReducer(TaskReducer, initialState);
 
+    /*
+     * call graphql function to get all tasks
+     */
     const getTasks = async () => {
         try {
             const resp = await findAllTasks();
-            dispatch({type: GET_TASKS, payload: resp.data.taskss});
+            dispatch({type: GET_TASKS, payload: resp});
         } catch(error) {
+            console.error(error);
             dispatch({type: TASK_ERROR, payload: error.message});
         }
     };
 
+    /*
+     * call graphql function to delete a single task
+     */
     const deleteTask = async id => {
         try {
-            await deleteOneTask(id);
-            dispatch({type: DELETE_TASK, payload: id});
+            const resp = await deleteOneTask(id);
+            dispatch({type: DELETE_TASK, payload: resp});
         }catch(error){
             console.error(error);
             dispatch({type: TASK_ERROR, payload: error.message});
         }
     };
 
-    const archiveTask = id => dispatch({type: ARCHIVE_TASK, payload: id});
-    const editTask = task => dispatch({type: EDIT_TASK, payload: task});
+    /*
+     * call graphql function to update a single task
+     */
+    const editTask = async task => {
+        try {
+            const resp = await updateTask(task);
+            dispatch({type: EDIT_TASK, payload: resp});
+        } catch(error){
+            console.error(error);
+            dispatch({type: TASK_ERROR, payload: error.message});
+        }
 
+    };
+
+    /*
+     * call graphql function to create a task
+     */
     const addTask = async task => {
         try {
             const resp = await createTask(task);
-            dispatch({type: ADD_TASK, payload: resp.data.insertOneTasks});
+            dispatch({type: ADD_TASK, payload: resp});
         } catch(error) {
             console.error(error);
             dispatch({type: TASK_ERROR, payload: error.message});
         }
     };
 
-    const finishTask = id => dispatch({type: FINISH_TASK, payload: id});
-
+    // clear error msg
     const clearTaskError = () => dispatch({type: CLEAR_TASK_ERROR});
+
+    // set current task to work on
+    const setCurrentTask = task => dispatch({type: SET_CURRENT_TASK, payload: task});
+
+    // clear current task (when work is done)
+    const clearCurrentTask = () => dispatch({type: CLEAR_CURRENT_TASK});
 
     return (
         <TaskContext.Provider value={{
@@ -73,10 +99,10 @@ const TaskState = props => {
             error: state.error,
             getTasks,
             deleteTask,
-            archiveTask,
             editTask,
+            setCurrentTask,
+            clearCurrentTask,
             addTask,
-            finishTask,
             clearTaskError
         }}>
             {props.children}

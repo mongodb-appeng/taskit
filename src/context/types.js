@@ -1,11 +1,10 @@
 export const GET_TASKS = 'GET_TASKS';
-export const GET_TASK = 'GET_TASK';
 export const ADD_TASK = 'ADD_TASK';
-export const FINISH_TASK = 'FINISH_TASK';
-export const ARCHIVE_TASK = 'ARCHIVE_TASK';
+export const SET_CURRENT_TASK = 'SET_CURRENT_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
 export const EDIT_TASK = 'EDIT_TASK';
 export const TASK_ERROR = 'TASK_ERROR';
+export const CLEAR_CURRENT_TASK = 'CLEAR_CURRENT_TASK';
 export const CLEAR_TASK_ERROR = 'CLEAR_TASK_ERROR';
 export const ANON_LOGIN = 'ANON_LOGIN';
 export const LOGOUT = 'LOGOUT';

@@ -1,15 +1,22 @@
-import {createTask, findAllTasks, findOneTaskById, deleteOneTask, updateTask} from './graphql';
-import {stitchClient, hasLoggedInUser, getCurrentUser, loginAnonymous, logoutCurrentUser} from './client';
+import {createTask, findAllTasks, deleteOneTask, updateTask} from './graphql';
+import {
+    stitchClient,
+    hasLoggedInUser,
+    getCurrentUser,
+    getCurrentUserToken,
+    loginAnonymous,
+    logoutCurrentUser
+} from './client';
 
 export {
     createTask,
     findAllTasks,
-    findOneTaskById,
     deleteOneTask,
     updateTask,
     stitchClient,
     hasLoggedInUser,
     getCurrentUser,
+    getCurrentUserToken,
     loginAnonymous,
     logoutCurrentUser
 }

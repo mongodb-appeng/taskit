@@ -3,6 +3,9 @@ import {Link} from 'react-router-dom';
 import StitchContext from '../../context/stitch/stitchContext';
 import './Navbar.css';
 
+/*
+ * simple navbar
+ */
 export const Navbar = () => {
     const stitchContext = useContext(StitchContext);
 
