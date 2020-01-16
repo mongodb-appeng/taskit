@@ -68,8 +68,8 @@ export const TaskModal = () => {
     const onSubmit = evt => {
         evt.preventDefault();
         if(current === null){
-            if(task.name === '' || task.description === ''){
-                setAlert('task form not filled in properly', 'warning');
+            if(task.name === ''){
+                setAlert('Name required for the task', 'warning');
             } else {
                 addTask(task);
             }
@@ -92,7 +92,13 @@ export const TaskModal = () => {
                 <div className='modal-content'>
                     <div className='modal-header'>
                         <h5 className='modal-title'>{current ? 'Edit Task' : 'Create New Task'}</h5>
-                        <button type='button' className='close' data-dismiss='modal' aria-label='Close'>
+                        <button
+                            type='button'
+                            className='close'
+                            data-dismiss='modal'
+                            aria-label='Close'
+                            onClick={clearCurrentTask}
+                        >
                             <span aria-hidden>&times;</span>
                         </button>
                     </div>

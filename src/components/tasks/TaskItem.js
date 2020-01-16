@@ -20,7 +20,8 @@ export const TaskItem = ({task}) => {
                         </p>
                         <h4 className='card-title'>{task.name}</h4>
                         <div>
-                            <p className='card-text'>{task.description}
+                            <p className='card-text'>
+                                {task.description === '' ? 'no description provided' : task.description}
                                 <span className='task-icon'>
                                     <i
                                         className='material-icons grey-text task-icon-btn'

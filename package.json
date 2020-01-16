@@ -28,6 +28,10 @@
     {
       "name": "Shawn McCarthy",
       "email": "shawn.mccarthy@mongodb.com"
+    },
+    {
+      "name": "Naomi Pentrel",
+      "email": "naomi@mongodb.com"
     }
   ],
   "license": "Apache-2.0",

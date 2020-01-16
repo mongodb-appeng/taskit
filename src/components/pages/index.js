@@ -1,6 +1,7 @@
 import React, {Fragment, useContext, useEffect} from 'react';
 import {TaskList, TaskModal} from '../tasks';
 import StitchContext from '../../context/stitch/stitchContext';
+import TaskContext from '../../context/task/taskContext';
 import AlertContext from '../../context/alert/alertContext';
 
 export const About = () =>  <div className='row h-50 align-items-center' style={{paddingTop: '50px'}}>
@@ -20,6 +21,9 @@ export const About = () =>  <div className='row h-50 align-items-center' style={
 </div>;
 
 export const Home = () => {
+    const taskContext = useContext(TaskContext);
+    const {clearCurrentTask} = taskContext;
+
     return (
         <Fragment>
             <div style={{paddingBottom: '10px', paddingTop: '10px'}}>
@@ -28,6 +32,7 @@ export const Home = () => {
                     className='btn btn-lg btn-secondary'
                     data-toggle='modal'
                     data-target='#taskModal'
+                    onClick={clearCurrentTask}
                 >
                     <i className='material-icons' style={{verticalAlign: 'middle', paddingBottom: '5px'}}>
                         add_circle_outline
