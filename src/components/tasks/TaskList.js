@@ -24,7 +24,7 @@ export const TaskList = () => {
         // eslint-disable-next-line
     }, [error]);
 
-    if(tasks.length === 0 && loading){
+    if(tasks && tasks.length === 0 && loading){
         return (
             <div className="d-flex justify-content-center mt-5">
                 <div className="spinner-border" role="status">
@@ -34,7 +34,7 @@ export const TaskList = () => {
         );
     }
 
-    if(tasks.length === 0){
+    if(tasks == null || tasks.length === 0){
         return (
             <div className="d-flex justify-content-center mt-5">
                 <h3>Lets begin by adding some tasks...</h3>
