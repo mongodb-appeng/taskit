@@ -1,11 +1,14 @@
 /*
  * graphql.js
+ * 
+ * TODO: Shouldn't the demo app include production best practices?
+ * 
  * please note this is not a production ready deployment, each of the
  * functions do some basic user checks to ensure we have a valid
  * anonymous user, then we use that current user to get a token which
  * is sent with the data to the graphql endpoint for processing.
  * Each function also has the same error processing allowing you to
- * look at each function individually without to many extra dependencies.
+ * look at each function individually without too many extra dependencies.
  *
  * The functions below show basic of how to send the query and
  * variables using axios, for these queries you will need to review
@@ -113,7 +116,6 @@ export const findAllTasks = async () => {
  * `owner_id` will be retrieved from the access token
  */
 export const updateTask = async (task) => {
-    console.log('updateTask');
     const user = getCurrentUser();
     if(user === null){
         throw new Error('invalid user');
