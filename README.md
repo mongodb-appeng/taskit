@@ -1,69 +1,54 @@
 # TaskIt: A MongoDB GraphQL Tutorial
 
 ## Description
-MongoDB Stitch has introduced GraphQL, this tutorial will walk through a simple todo
-application in which users can create, read, update, and delete tasks using GraphQL
+MongoDB Stitch now provides GraphQL APIs to access your data. This tutorial walks through a simple todo
+application in which users can create, read, update, and delete tasks using GraphQL.
+
+## The Software Stack
+- Backend
+  - MongoDB Atlas (Database as a Service)
+  - MongoDB Stitch (Serverless platform)
+- Frontend
+  - [React](https://reactjs.org/docs/getting-started.html) (JavaScript framework)
 
 ## Getting Started
-Before the application can be configured to run, MongoDB Atlas and Stitch will have
-to be setup.
+Before the React application can be run, MongoDB Atlas and Stitch must be configured.
 
-### Atlas Setup
-The first thing we need to do is to create an atlas cluster, if this is your first 
-time setting up atlas, please follow the instructions found in this [tutorial](https://docs.atlas.mongodb.com/getting-started/#deploy-a-free-tier-cluster)
+### MongoDB Atlas Setup
+A MongoDB Atlas cluster is needed for the application (skip this section if you already have one which can be used.). Follow this [tutorial](https://docs.atlas.mongodb.com/getting-started/#deploy-a-free-tier-cluster) to create am Atlas cluster.
 
-For this tutorial an "M0", our free forever instance, will be suffient.
-
-#### Create Collection
-Next lets create our database and collection that will be used for the application, to
-create the database and collection follow the instructions found [here](https://docs.atlas.mongodb.com/tutorial/insert-data-into-your-cluster/).
-
-Create a database named `demo` and a collection named `tasks`, this will be required for
-the queries found int [graphql.js](./src/stitch/graphql.js) as the schema names are hardcoded.
-
-Once this is done lets create a Stitch App, which will provide our GraphQL endpoint and also
-host our application.
+For this tutorial an "M0", our free-forever instance, is suffient.
 
 ### Stitch Setup
-From our Atlas UI lets create a stitch app, follow the instructions found [here](https://docs.mongodb.com/stitch/procedures/create-stitch-app/)
+From the Atlas UI lets create a stitch app, follow the instructions found [here](https://docs.mongodb.com/stitch/procedures/create-stitch-app/).
 
-Take note of the application id (APP ID) that is created, copy this to a temp file as we will
-need this later in our application configuration.
+Take note of the application id (APP ID), this will be required later for application configuration.
 
 **NOTE**: during this configuration process, we can wait till the end to review and deploy all 
-changes, but I would recommend deploying as each step is done this will ensure that we don't
-have to redo steps if our browser crashes or anything like that.
+changes, but I would recommend deploying as each step is performed. Alternatively, turn off "Drafts" under the "Deploy/Configuration" Stitch tab.
 
-#### Link Cluster
-While creating the application be sure to link to the cluster we created above. If we already
-have a stitch application setup that we want to use, the cluster created above must be linked
-to the application, to do so follow the instructions found [here](https://docs.mongodb.com/stitch/mongodb/link-a-cluster/).
+#### Link Database Cluster
+While creating the application be sure to link to the cluster created above. If using an existing Stitch application, the database cluster must be linked to that app, following [these nstructions](https://docs.mongodb.com/stitch/mongodb/link-a-cluster/).
 
-#### Create User Provider
-Now that our cluster is created, for our application we will require anonymous authentication,
-set this provider up using the instructions found [here](https://docs.mongodb.com/stitch/authentication/anonymous/)
+#### Enable Authentication
+The frontend application requires anonymous authentication, set this provider up using the instructions found [here](https://docs.mongodb.com/stitch/authentication/anonymous/)
 
-This will allow our application to create a user object which will contain an auth token which will
-be used by graphql to create and read data. This is the minimal authentication that will be required.
+This allows our application to create a user object which will contain an auth token which will
+be used by GraphQL to create, modify, and read data. This is the minimal level of authentication to work with Stitch – a production application would use a more robust method such as username/password, JSON Web Tokens, or 3rd-party authentication providers such as Google, Facebook or Apple.
 
-#### Create Rules
-Now we have to create rules on how our application users can read and write data, for this
-tutorial we will create a simple template where an authenticated user can read and write their
-own data only. Follow the instructions found [here](https://docs.mongodb.com/stitch/mongodb/define-roles-and-permissions/)
-to setup our rules.
+#### Create Data Access Rules
+For users to access data held in Atlas, a Stitch Rule must be added for the collection that will hold the data. For this
+tutorial, use the simple template where an authenticated user can read and write just their own data only by following [these instructions](https://docs.mongodb.com/stitch/mongodb/define-roles-and-permissions/).
 
-Select the `demo` database and the `tasks` collections, the rules will will be applied to this
-collection only.
+Select the `demo` database and the `tasks` collections, the rule will will be applied to this collection only.
 
-The template to use is `Users can only read and write their own data`, for
-the field name to use for the user id enter `owner_id`.
+The template to use is `Users can only read and write their own data`, for the field name to use for the user id enter `owner_id`.
 
-#### Create Schema 
-Next we will need to create a schema for our collection, this will be required to allow the 
-GraphQL endpoint to generate a schema that can be used.
+#### Create JSON Schema 
+Next we will need to create a schema for our collection, that is used in the GraphQL API.
 
-Since we don't have any documents in our collection we cannot use a sample to generate the schema.
-The schema below will be used with the instructions found [here](https://docs.mongodb.com/stitch/mongodb/enforce-a-document-schema/)
+Since we don't have any documents in our collection we cannot use a sample to generate the schema, or validate the existing schema against existing data.
+Use [these instructions](https://docs.mongodb.com/stitch/mongodb/enforce-a-document-schema/) to define the schema:
 
 ```
 {
@@ -121,93 +106,78 @@ The schema below will be used with the instructions found [here](https://docs.mo
 }
 ```
 
-**NOTE**: we are currently not using all the fields, but we will be using these fields
-in future tutorials.
-
-Once this is done, that is it our stitch application can now use GraphQL.
+**NOTE**: Not all the fields are currently being used.
 
 Please remember to review and deploy the changes to take effect.
 
-#### GraphQL setup
-From the Stitch UI, go to the `Web Access` menu (found on the left hand side).
+At this point, the Stitch application is providing the GraphQL API,
 
-Select the graphql option in the main window, this will bring up the GraphiQL editor
-and documentation explorer, if there are any schema errors they will be shown here.
+#### Testing The GraphQL Interface
+From the Stitch UI, go to the `GraphQL` menu (found on the left hand side), this will bring up the GraphiQL editor
+and documentation explorer.
 
-Using the documentation and the UI various queries can be executed here, because we 
-are entering queries in the admin UI, the owner_id will not be needed.
+Using the documentation and the UI various queries can be tested here. Because we 
+are entering queries in the admin UI, the `owner_id` attribute is not needed.
 
-The main window will also contain the GraphQL endpoint that our application will use, copy
-this endpoint into a temporary file as we will need this later.
+Take a note of the GraphQL endpoint listed on that screen.
 
-#### Setup Hosting
-This is optional but if we want to host our application on the Stitch Platform, we need
-to configure the application to support hosting using the instructions found [here](https://docs.mongodb.com/stitch/hosting/enable-hosting/)
+#### (Optional) Setup Hosting
+This is optional but if you want to host your application on the Stitch Platform, [enable static hosting](https://docs.mongodb.com/stitch/hosting/enable-hosting/) for the frontend web assets.
 
 This will create a secure URL that can be used to access the application.
 
-**NOTE**: please note that because this application use anonymous authentication we strongly
+**NOTE**: Please note that because this application uses anonymous authentication we strongly
 recommend to not host this application for too long as anyone with the URL can access the 
-application and login anonymously and create data on your system.
+application and login anonymously to create data on your system.
 
-Now we are ready to setup the react application.
+## Setup React Application
+It is assumed your development environment is setup to run [Node.js](https://nodejs.org/en/).
 
-## Setup Application
-It is assumed your development environment is setup to run node.
+Clone this repo, copy the `env.local` file to `.env.local`, and add the stitch app id and GraphQL endpoint to the environment variables.
 
-Clone this repo locally, copy the env.local file to .env.local, remove the comments found 
-in the file and add your stitch app and graphql endpoint to the environment variables found 
-here.
+If these variables change at any point, you will need to restart the application for the changes to take effect.
 
-If these variables change at any point, you will need to restart the application for the changes
-to take effect.
-
-Next run `yarn install` to install the required node modules.
-
-The application is ready to test.
+Run `yarn install` to install the required node modules.
 
 ### Run locally to test
-Now run `yarn start` this will start the development server and start a browser tab and
-open the applcation.
+Run `yarn start`, this will start the development server and open a browser tab running the applcation.
 
-It is recommended to install the react development tools for the browser and open the 
+It is recommended to install the React development tools for the browser and open the 
 development console to help troubleshoot any issues.
 
-Any graphql issues will be logged as errors to the development console.
+Any GraphQL issues will be logged as errors to the development console.
  
 ### Compile React App
-Once the application has been tested and you want to create a build, run the command
-`yarn build` this will create a build directory, the contents of this directory will
-need to be updated to Stitch.
+Once the application has been tested and you want to create a build, run 
+`yarn build` to create a build directory, the contents of this directory will
+need to be uploaded to Stitch hosting (or your choice of web host).
 
-### Upload React Application
+### (Optional) Upload React Application
 Follow the instruction found [here](https://docs.mongodb.com/stitch/hosting/upload-content-to-stitch/)
-to updload the react application to stitch.  Once the files have been deployed we will
-be able to go to the public URL that Stitch provided.
+to updload the React application to stitch.  Once the files have been deployed, the application is available at the URL shown on the Stitch hosting page.
 
 ## Deployment Notes
 
 ### Authentication
-As this tutorial is solely focused on GraphQL, anonymous authentication has been used to 
-reduce friction.
+As this tutorial is solely focused on GraphQL, anonymous authentication has been used to reduce friction.
 
 ### Hosting
-Don't host for too long as anyone will be able to write data to your tasks collection
+Don't host for too long if your concerned about others writing tasks to your `tasks` collection.
 
-## Tasks left to do
+## Optional Features to Add
 1. Use 3rd party authentication
-1. create archive and finish icons
-1. create a filter to show archived and finished tasks
-1. introduce a recurring task
-1. create alerts for tasks that are coming due
-1. create a search bar to filter tasks
-1. support custom images for tasks
+1. Add archive and finish buttons
+1. Create a filter to show archived and finished tasks
+1. Introduce a recurring task
+1. Create alerts for tasks that are coming due
+1. Create a search bar to filter tasks
+1. Cupport custom images for tasks
 
 ## Getting involved
 If you have any issues with the setup or find any bugs please open an issue and we will
-address it as soon as possible.
+address them as soon as possible.
 
-We also accept pull requests, if you feel like making changes or fixing bugs you find, 
+We also pull requests, if you feel like adding features or fixing bugs you find, 
 issue a pull request and we will review it and work with you to get it merged.
 
 ## References
