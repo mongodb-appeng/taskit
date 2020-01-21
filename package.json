@@ -3,14 +3,14 @@
   "description": "MongoDB GraphQL Demo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/shawnbmccarthy/todo#readme",
+  "homepage": "https://github.com/mongodb-appeng/taskit#readme",
   "bugs": {
-    "url": "https://github.com/shawnbmccarthy/todo/issues",
+    "url": "https://github.com/mongodb-appeng/taskit/issues",
     "email": "shawn.mccarthy@mongodb.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/shawnbmccarthy/todo"
+    "url": "https://github.com/mongodb-appeng/taskit"
   },
   "contributors": [
     {
