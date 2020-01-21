@@ -46,7 +46,7 @@ For users to access data held in Atlas, a Stitch Rule must be added for the coll
 
 Select the `demo` database and the `tasks` collections, the rule will be applied to this collection only.
 
-The template to use is `Users can only read and write their own data`, for the field `name` to use for the `user id` enter `owner_id`.
+The template to use is `Users can only read and write their own data`, for the "field name for the user id" section enter `owner_id`.
 
 #### Create JSON Schema 
 
