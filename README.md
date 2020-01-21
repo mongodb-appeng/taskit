@@ -32,7 +32,7 @@ Take note of the application id (APP ID), this will be required later for applic
 
 #### Link Database Cluster
 
-While creating the Stitch application be sure to link to the cluster created above. If using an existing Stitch application, the database cluster must be linked to that app, following [these nstructions](https://docs.mongodb.com/stitch/mongodb/link-a-cluster/).
+While creating the Stitch application be sure to link to the cluster created above. If using an existing Stitch application, the database cluster must be linked to that app, following [these instructions](https://docs.mongodb.com/stitch/mongodb/link-a-cluster/).
 
 #### Enable Authentication
 
