@@ -1,16 +1,19 @@
 {
-  "name": "todo",
-  "description": "MongoDB GraphQL Demo",
-  "version": "0.1.0",
-  "private": true,
-  "homepage": "https://github.com/mongodb-appeng/taskit#readme",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "bugs": {
     "url": "https://github.com/mongodb-appeng/taskit/issues",
     "email": "shawn.mccarthy@mongodb.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mongodb-appeng/taskit"
   },
   "contributors": [
     {
@@ -34,7 +37,6 @@
       "email": "naomi@mongodb.com"
     }
   ],
-  "license": "Apache-2.0",
   "dependencies": {
     "@material-ui/core": "^4.8.2",
     "@material-ui/icons": "^4.5.1",
@@ -47,25 +49,26 @@
     "react-scripts": "3.3.0",
     "uuid": "^3.3.3"
   },
+  "description": "MongoDB GraphQL Demo",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "homepage": "https://github.com/mongodb-appeng/taskit#readme",
+  "license": "Apache-2.0",
+  "name": "todo",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb-appeng/taskit"
+  },
+  "resolutions": {
+    "serialize-javascript": "^2.1.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "version": "0.1.0"
 }
