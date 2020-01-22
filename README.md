@@ -44,7 +44,7 @@ This allows our application to create a user object containing an auth token to 
 
 For users to access data held in Atlas, a Stitch Rule must be added for the collection that will hold the data. For this tutorial, use the simple template where an authenticated user can read and write just their own data only by following [these instructions](https://docs.mongodb.com/stitch/mongodb/define-roles-and-permissions/).
 
-Select the `demo` database and the `tasks` collections, the rule will be applied to this collection only.
+Select the `demo` database and the `task` collections, the rule will be applied to this collection only.
 
 The template to use is `Users can only read and write their own data`, for the "field name for the user id" section enter `owner_id`.
 
@@ -168,7 +168,7 @@ As this tutorial is solely focused on GraphQL, anonymous authentication has been
 
 ### Hosting
 
-Don't host for too long if your concerned about others writing tasks to your `tasks` collection.
+Don't host for too long if your concerned about others writing tasks to your `task` collection.
 
 ## Optional Features to Add
 

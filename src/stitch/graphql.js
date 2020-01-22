@@ -46,8 +46,8 @@ export const createTask = async task => {
         },
         data: {
             query: `
-                mutation($data:TasksInsertInput!){
-                    insertOneTasks(data:$data){
+                mutation($data:TaskInsertInput!){
+                    insertOneTask(data:$data){
                         _id,
                         name,
                         description,
@@ -66,7 +66,7 @@ export const createTask = async task => {
     if('errors' in respData){
         throw new Error(respData.errors[0].message);
     }
-    return respData.data.insertOneTasks;
+    return respData.data.insertOneTask;
 };
 
 /*
@@ -90,7 +90,7 @@ export const findAllTasks = async () => {
         data: {
             query: `
                 {
-                    taskss(sortBy:CREATEDAT_DESC){
+                    tasks(sortBy:CREATEDAT_DESC){
                         _id,
                         name,
                         description,
@@ -107,11 +107,11 @@ export const findAllTasks = async () => {
     if('errors' in respData){
         throw new Error(respData.errors[0].message);
     }
-    return respData.data.taskss
+    return respData.data.tasks
 };
 
 /*
- * the update task using the updateOneTasks mutation, notice
+ * the update task using the updateOneTask mutation, notice
  * here we do not need to add the `owner_id` field as the
  * `owner_id` will be retrieved from the access token
  */
@@ -129,8 +129,8 @@ export const updateTask = async (task) => {
         },
         data: {
             query: `
-                mutation($query:TasksQueryInput!, $set:TasksUpdateInput!){
-                    updateOneTasks(query:$query, set:$set){
+                mutation($query:TaskQueryInput!, $set:TaskUpdateInput!){
+                    updateOneTask(query:$query, set:$set){
                         _id,
                         name,
                         description,
@@ -153,11 +153,11 @@ export const updateTask = async (task) => {
     if('errors' in respData){
         throw new Error(respData.errors[0].message);
     }
-    return respData.data.updateOneTasks;
+    return respData.data.updateOneTask;
 };
 
 /*
- * calls the deleteOneTasks mutation, this delete can return all the
+ * calls the deleteOneTask mutation, this delete can return all the
  * information found in the document if more processing needed to be
  * done (for exmample maybe use an alert to show the task deleted)
  */
@@ -175,8 +175,8 @@ export const deleteOneTask = async id => {
         },
         data: {
             query: `
-                mutation($data:TasksQueryInput!){
-                    deleteOneTasks(query:$data){
+                mutation($data:TaskQueryInput!){
+                    deleteOneTask(query:$data){
                         _id,
                         description,
                         name
@@ -194,5 +194,5 @@ export const deleteOneTask = async id => {
     if('errors' in respData){
         throw new Error(respData.errors[0].message);
     }
-    return respData.data.deleteOneTasks;
+    return respData.data.deleteOneTask;
 };
