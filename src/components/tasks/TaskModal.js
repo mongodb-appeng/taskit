@@ -126,9 +126,9 @@ export const TaskModal = () => {
                             </div>
                             <div className="dropdown-divider"/>
                             <div className='input-group mb-3'>
-                                <ul className="list-group list-group-horizontal">
+                                <ul className='list-group list-group-horizontal d-flex flex-wrap'>
                                     {tags.map((tag, idx) => (
-                                        <li className='btn btn-secondary mr-1' key={idx} onClick={()=>removeTag(idx)}>
+                                        <li className='btn btn-secondary mr-1 mb-1' key={idx} onClick={()=>removeTag(idx)}>
                                             <span>{tag}</span>
 
                                         </li>
@@ -136,11 +136,13 @@ export const TaskModal = () => {
                                 </ul>
                             </div>
                             <div className='input-group mb-3'>
+                                <label className="ml-1 mb-0 w-100 text-muted">press enter to add tag</label>
                                 <input
                                     className='w-100 form-control'
                                     type="text"
                                     onKeyUp={addTags}
-                                    placeholder='press enter to add tags'/>
+                                    placeholder='tag name'
+                                />
                             </div>
                             <div>
                                 <p className='ml-1 mb-0 text-muted'>set due date</p>
