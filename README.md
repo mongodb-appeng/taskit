@@ -20,7 +20,7 @@ Before the React application can be run, MongoDB Atlas and Stitch __must__ be co
 
 A MongoDB Atlas cluster is needed for the application (skip this section if you already have one which can be used.). Follow this [tutorial](https://docs.atlas.mongodb.com/getting-started/#deploy-a-free-tier-cluster) to create an Atlas cluster.
 
-For this tutorial an "M0", our free-forever instance, is suffient.
+For this tutorial an "M0", our free-forever instance, is sufficient.
 
 ### Stitch Setup
 
@@ -178,7 +178,7 @@ Don't host for too long if your concerned about others writing tasks to your `ta
 1. Introduce a recurring task
 1. Create alerts for tasks that are coming due
 1. Create a search bar to filter tasks
-1. Cupport custom images for tasks
+1. Support custom images for tasks
 
 ## Getting involved
 
